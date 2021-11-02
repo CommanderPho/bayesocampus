@@ -4,7 +4,31 @@ addpath('../src')
 
 %% Load the data.
 file_path = '../../EichenbaumData/AJF023/EF3/AJF023EF3SpksEvs.mat';
-[spikes,X,t,sample_rate] = load_data_xy(file_path);
+[spikes, X, t, sample_rate] = load_data_xy(file_path);
+% how to spell "TURD"?
+%{
+spikes: 1xK cell array of spiking data, where K is the number of units:
+            spikes{1}: vector of timestamps for each spike at unit 1.
+            spikes{2}: vector of timestamps for each spike at unit 2.
+            ...
+        X: NxM array of ground-truth stimulus features, where N is the number of
+        stimulus dimensions and M is the number of sampling timestamps.
+        t: 1xM array of timestamps for ground-truth stimulus sampling.
+        sample_rate: sample rate of ground-truth data.
+%}
+
+spikes = source_data.spikes.RoyMaze1.time;
+% Absolute timestamp version are available here: source_data.position.RoyMaze1.t
+
+X = spikeStruct.linearPos;
+t = spikeStruct.t;
+
+sample_rate = 1/source_data.basics.RoyMaze1.posSampleRate; % 1 / 29.970;
+
+
+%% Pho's comments:
+% Looks like I need some position data in X
+
 
 %X = X(1,:); % For testing on one-dimensional data.
 %X = [X; X(1,:)]; % For testing on three-dimensional data.

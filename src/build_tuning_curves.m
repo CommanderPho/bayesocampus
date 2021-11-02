@@ -89,7 +89,7 @@ coords = cell(N,1);
 [coords{:}] = ndgrid(grid_vectors{:});
 
 % Get occupancy.
-t_occ = get_bin_counts(X_b,occ_size)*sample_rate;
+t_occ = get_bin_counts(X_b, occ_size) * sample_rate;
 
 empties = t_occ == 0;
 
@@ -121,17 +121,18 @@ end
 
 % Build the tuning curve for each unit.
 for i = 1:K
-    ts = spikes{i};
+    ts = spikes{i}; % having problem when i == 1
+    % 1x150800
     
     % Only use spike data from the specified intervals.
-    ts_use = get_interval_logical(ts,t_start,t_end);
+    ts_use = get_interval_logical(ts,t_start,t_end); 
     ts = ts(ts_use);
     
     % Put the spiking data into bins in stimulus space.
-    ts_b = interp1(t,X_b',ts,'nearest')';
+    ts_b = interp1(t, X_b', ts, 'nearest')'; %ts is 0
     
     % Get spike counts at each location.
-    n = get_bin_counts(ts_b,occ_size,empties);
+    n = get_bin_counts(ts_b,occ_size,empties); %ts_b is 0
     
     % Smooth spike counts.
     n = convn(n,G,'same');

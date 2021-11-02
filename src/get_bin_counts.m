@@ -22,7 +22,7 @@ if nargin < 3
 end
 empties = empties(:);   % Unroll empties.
 
-N = size(X_b,1);    % Number of stimulus dimensions.
+N  = size(X_b,1);    % Number of stimulus dimensions.
 M = size(X_b,2);    % Number of samples.
 k = prod(occ_size); % Number of bins in the whole occupancy space.
 
@@ -54,6 +54,11 @@ end
 if N == 1
     occ_size = [occ_size,1];
 end
-counts = reshape(counts,occ_size);
+
+if length(occ_size) < 2
+    occ_size = [occ_size,1];
+end
+% counts: 1x73 double
+counts = reshape(counts, occ_size);
 
 end
